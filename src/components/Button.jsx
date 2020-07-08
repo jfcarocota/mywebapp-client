@@ -14,7 +14,7 @@ export default class Button extends Component{
         }
     }
 
-    defaultClick(){
+    defaultClick = ()=> {
         console.log('click default');
         this.props.parentContext.setState({message: 'mensaje cambiado'});
         //this.state.parentContext.setState({message: 'mensaje cambiado'});
@@ -27,7 +27,7 @@ export default class Button extends Component{
         const {name, type} = this.state;
 
         return (
-            <button onClick={this.defaultClick.bind(this)} href="#" className={`btn btn-${type}`}>{name}</button>
+            <button onClick={this.defaultClick} href="#" className={`btn btn-${type}`}>{name}</button>
         );
     }
 }
