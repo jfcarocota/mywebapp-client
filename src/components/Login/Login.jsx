@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import axios from 'axios';
+import {Redirect} from 'react-router-dom';
 
 export default class Login extends Component{
 
@@ -16,8 +17,9 @@ export default class Login extends Component{
         //alert("Hola");
         const {username, password} = this.state;
         axios.post('http://localhost:8081/auth', {username: username, password: password})
-        .then( async response => {
-            return await this.props.history.push('/dashboard');
+        .then( response => {
+            //this.props.history.push('/dashboard');
+            return <Redirect to="/dashboard"/>;
         });
     }
 
