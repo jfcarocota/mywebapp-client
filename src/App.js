@@ -1,9 +1,10 @@
 import React, {Component, Fragment} from 'react';
-import Button from './components/Button';
+//import Button from './components/Button';
+import Routes from './components/Routes';
 
 export default class App extends Component{
 
-  constructor(){
+  /*constructor(){
     super();
 
     this.state={
@@ -17,11 +18,11 @@ export default class App extends Component{
 
   componentDidUpdate(){
     console.log(this.state.message);
-  }
+  }*/
 
   render() {
 
-    return (
+    /*return (
       <Fragment>
         <h1>App</h1>
         <h4>subtitulo</h4>
@@ -33,9 +34,15 @@ export default class App extends Component{
           <div className="card-body">
             <h5 className="card-title">Card title</h5>
             <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <Button name="enviar" type="success" parentContext={this}/>
+            <Button name="enviar" type="success" click={this.clickCall}/>
+            <Button name="enviar" type="primary" parentContext={this}/>
           </div>
       </div>
+      </Fragment>
+    );*/
+    return(
+      <Fragment>
+        <Routes/>
       </Fragment>
     );
   }

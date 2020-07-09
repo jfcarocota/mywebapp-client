@@ -9,7 +9,7 @@ export default class Button extends Component{
             name: props.name ? props.name : 'something',
             type: props.type ? props.type : 'primary',
             //click: props.click ? props.click : ()=> console.log('click default')
-            //click: props.click ? props.click : this.defaultClick,
+            click: props.click ? props.click : this.defaultClick,
             //parentContext: props.parentContext
         }
     }
@@ -19,15 +19,15 @@ export default class Button extends Component{
         this.props.parentContext.setState({message: 'mensaje cambiado'});
         //this.state.parentContext.setState({message: 'mensaje cambiado'});
 
-        this.setState({name: 'sdfsdf'})
+        this.setState({name: 'sdfsdf'});
     }
 
     render() {
 
-        const {name, type} = this.state;
+        const {name, type, click} = this.state;
 
         return (
-            <button onClick={this.defaultClick} href="#" className={`btn btn-${type}`}>{name}</button>
+            <button onClick={click} href="#" className={`btn btn-${type}`}>{name}</button>
         );
     }
 }
