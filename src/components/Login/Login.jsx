@@ -4,22 +4,17 @@ import {Redirect} from 'react-router-dom';
 
 export default class Login extends Component{
 
-    constructor(props){
-        super(props);
-
-        this.state = {
-            username: '',
-            password: ''
-        }
+    state = {
+        username: '',
+        password: ''
     }
 
+
     authenticate = ()=>{
-        //alert("Hola");
         const {username, password} = this.state;
         axios.post('http://localhost:8081/auth', {username: username, password: password})
         .then( response => {
-            //this.props.history.push('/dashboard');
-            return <Redirect to="/dashboard"/>;
+            this.props.history.push('/dashboard');
         });
     }
 
@@ -29,6 +24,10 @@ export default class Login extends Component{
 
     handlePasswordChange = e =>{
         this.setState({password: e.target.value});
+    }
+
+    componentDidMount(){
+        console.log('componente creado');
     }
 
     componentDidUpdate(){

@@ -2,17 +2,16 @@ import React, {Component} from 'react';
 
 export default class Button extends Component{
 
-    constructor(props){
-        super(props);
 
-        this.state = {
-            name: props.name ? props.name : 'something',
-            type: props.type ? props.type : 'primary',
-            //click: props.click ? props.click : ()=> console.log('click default')
-            click: props.click ? props.click : this.defaultClick,
-            //parentContext: props.parentContext
-        }
+
+    state = {
+        name: props.name ? props.name : 'something',
+        type: props.type ? props.type : 'primary',
+        //click: props.click ? props.click : ()=> console.log('click default')
+        click: props.click ? props.click : this.defaultClick,
+        //parentContext: props.parentContext
     }
+    
 
     defaultClick = ()=> {
         console.log('click default');
