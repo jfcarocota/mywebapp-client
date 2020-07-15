@@ -5,6 +5,7 @@ import Input from '../Input';
 import FormGroup from '../FormGroup';
 import sha256 from 'crypto-js/sha256';
 import Cookies from 'js-cookie';
+import JwtDecode from 'jwt-decode';
 
 export default class Login extends Component{
 
@@ -17,8 +18,9 @@ export default class Login extends Component{
         const {username, password} = this.state;
         axios.post('http://localhost:8081/authhash', {message:sha256(`${username}:${password}`).toString()})
         .then( response => {
-            Cookies.set('session', response, {expires: response.exp});
-            //console.log(response.data);
+            const sessionInfo = JwtDecode(response.data);
+            //un numero entero significa un di­a
+            Cookies.set('session', sessionInfo.session, {expires: 1});
             this.props.history.push('/dashboard');
         });
     }

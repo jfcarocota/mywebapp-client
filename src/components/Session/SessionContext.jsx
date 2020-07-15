@@ -11,7 +11,7 @@ export class SessionProvider extends Component{
         hello: ''
     }
 
-    showHello = ()=> this.setState({hello: 'Hola empleado'});
+    showHello = ()=> this.setState({hello: 'Hola'});
 
     hideHello = ()=> this.setState({hello: ''});
 
