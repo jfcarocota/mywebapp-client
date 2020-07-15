@@ -1,6 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import axios from 'axios';
-import {Redirect} from 'react-router-dom';
+import Button from '../Button';
+import Input from '../Input';
+import FormGroup from '../FormGroup';
+import sha256 from 'crypto-js/sha256';
+import Cookies from 'js-cookie';
 
 export default class Login extends Component{
 
@@ -9,11 +13,12 @@ export default class Login extends Component{
         password: ''
     }
 
-
     authenticate = ()=>{
         const {username, password} = this.state;
-        axios.post('http://localhost:8081/auth', {username: username, password: password})
+        axios.post('http://localhost:8081/authhash', {message:sha256(`${username}:${password}`).toString()})
         .then( response => {
+            Cookies.set('session', response, {expires: response.exp});
+            //console.log(response.data);
             this.props.history.push('/dashboard');
         });
     }
@@ -27,13 +32,9 @@ export default class Login extends Component{
     }
 
     componentDidMount(){
-        console.log('componente creado');
-    }
-
-    componentDidUpdate(){
-        const {username, password} = this.state;
-        console.log(username);
-        console.log(password);
+        if(Cookies.get('session')){
+            this.props.history.push('/dashboard');
+        }
     }
 
     render() {
@@ -43,14 +44,13 @@ export default class Login extends Component{
                 <div style={{
                     width: '30%'
                 }}>
-                    <div className="form-group">
+                    <FormGroup>
                         <span>Username: </span>
-                        {/*<input onChange={this.handleUsernameChange} className="form-control" type="email" placeholder="username"/><br/>*/}
-                        <input onChange={this.handleUsernameChange} className="form-control" type="text" placeholder="username"/><br/>
+                        <Input onChange={this.handleUsernameChange} placeholder="username"/>
                         <span>Password: </span>
-                        <input onChange={this.handlePasswordChange} className="form-control" type="password" placeholder="password"/><br/>
-                        <input onClick={this.authenticate} type="submit" value="Login" className="btn btn-primary"/>
-                    </div>
+                        <Input onChange={this.handlePasswordChange} placeholder="password" type="password"/>
+                        <Button onClick={this.authenticate} type="primary" name="login"/>
+                    </FormGroup>
                 </div>
             </Fragment>
         );

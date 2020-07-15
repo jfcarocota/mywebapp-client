@@ -2,31 +2,25 @@ import React, {Component} from 'react';
 
 export default class Button extends Component{
 
-
-
     state = {
-        name: props.name ? props.name : 'something',
-        type: props.type ? props.type : 'primary',
-        //click: props.click ? props.click : ()=> console.log('click default')
-        click: props.click ? props.click : this.defaultClick,
-        //parentContext: props.parentContext
+        name: this.props.name ? this.props.name : 'something',
+        type: this.props.type ? this.props.type : 'primary',
+        onClick: this.props.onClick ? this.props.onClick : this.defaultClick
     }
     
 
     defaultClick = ()=> {
         console.log('click default');
         this.props.parentContext.setState({message: 'mensaje cambiado'});
-        //this.state.parentContext.setState({message: 'mensaje cambiado'});
-
         this.setState({name: 'sdfsdf'});
     }
 
     render() {
 
-        const {name, type, click} = this.state;
+        const {name, type, onClick} = this.state;
 
         return (
-            <button onClick={click} href="#" className={`btn btn-${type}`}>{name}</button>
+            <button onClick={onClick} href="#" className={`btn btn-${type}`}>{name}</button>
         );
     }
 }

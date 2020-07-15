@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import RouteProtected from '../RouteProtected';
 
-export default class Dashboard extends Component{
+export default class Sales extends Component{
 
     render() {
         return (
             <RouteProtected>
-                <h1>Dashboard</h1>
+                <h1>Sales</h1>
             </RouteProtected>
         );
     }
