@@ -23,6 +23,15 @@ export class SessionProvider extends Component{
         this.hideHello();
     }
 
+    /*auth = token =>{
+        setTimeout(() => {
+            //axios
+            this.auth();
+        }, 7000);
+    }*/
+
+    //this.auth(token);
+
     logoutLink = <Link onClick={this.logout} to="/">logout</Link>;
 
     showLink = ()=> this.setState({sessionLink: this.logoutLink});
