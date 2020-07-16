@@ -12,6 +12,8 @@ export class SessionProvider extends Component{
         hello: '',
     }
 
+    tokenLoop = '';
+
     showHello = ()=> this.setState({hello: 'Hola'});
 
     hideHello = ()=> this.setState({hello: ''});
@@ -22,7 +24,7 @@ export class SessionProvider extends Component{
         Cookies.remove('session');
         this.hideLink();
         this.hideHello();
-        clearTimeout(this.tokenizer);
+        clearTimeout(this.tokenLoop);
         Cookies.remove('authorization')
     }
 
@@ -32,14 +34,12 @@ export class SessionProvider extends Component{
     }
 
     tokenizer = ()=>{
-        setTimeout(() => {
+        this.tokenLoop = setTimeout(() => {
             this.generateToken();
             //console.log(Cookies.get('authorization'));
             this.tokenizer();
         }, 5000);
     }
-
-    //this.auth(token);
 
     logoutLink = <Link onClick={this.logout} to="/">logout</Link>;
 
