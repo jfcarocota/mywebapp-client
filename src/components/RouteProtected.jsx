@@ -15,8 +15,13 @@ class RouteProtected extends Component{
         if(!Cookies.get('session')){
             this.props.history.push('/');
         }else{
+            //this.context.state.authorization = response.data;
+
+            this.context.generateToken();
+            this.context.tokenizer();
+
             this.context.showLink();
-            //this.context.showHello();
+            //console.log(this.context.state.authorization);
             this.context.state.hello = `Bienvenido: ${this.state.employee.username}`;
         }
     }

@@ -1,15 +1,19 @@
 import React, {Component} from 'react';
 import RouteProtected from '../RouteProtected';
 import axios from 'axios';
+import SessionContext from '../Session/SessionContext';
+import Cookies from 'js-cookie';
 
 export default class Dashboard extends Component{
+
+    static contextType = SessionContext;
 
     state = {
         persons: []
     }
 
     componentDidMount(){
-        axios.get('http://localhost:8081/persons')
+        axios.get('http://localhost:8081/persons', {headers: {authorization: Cookies.get('authorization')}})
             .then(response => {
                 this.setState({persons: response.data.map(index =>{
                     return <li key={index.id}>

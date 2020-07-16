@@ -1,6 +1,7 @@
 import React, {Component, createContext, Fragment} from 'react';
 import { Link } from 'react-router-dom';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const SessionContext = createContext();
 
@@ -8,7 +9,7 @@ export class SessionProvider extends Component{
 
     state = {
         sessionLink: <Fragment/>,
-        hello: ''
+        hello: '',
     }
 
     showHello = ()=> this.setState({hello: 'Hola'});
@@ -21,14 +22,22 @@ export class SessionProvider extends Component{
         Cookies.remove('session');
         this.hideLink();
         this.hideHello();
+        clearTimeout(this.tokenizer);
+        Cookies.remove('authorization')
     }
 
-    /*auth = token =>{
+    generateToken = ()=>{
+        axios.get('http://localhost:8081/token', {headers: {authorization: Cookies.get('authorization')}})
+                .then(response => Cookies.set('authorization', response.data));
+    }
+
+    tokenizer = ()=>{
         setTimeout(() => {
-            //axios
-            this.auth();
-        }, 7000);
-    }*/
+            this.generateToken();
+            //console.log(Cookies.get('authorization'));
+            this.tokenizer();
+        }, 5000);
+    }
 
     //this.auth(token);
 
@@ -41,7 +50,9 @@ export class SessionProvider extends Component{
             <SessionContext.Provider value={{
                 state: this.state,
                 showLink: this.showLink,
-                showHello: this.showHello
+                showHello: this.showHello,
+                generateToken: this.generateToken,
+                tokenizer: this.tokenizer
             }}>
                 {this.props.children}
             </SessionContext.Provider>

@@ -6,8 +6,11 @@ import FormGroup from '../FormGroup';
 import sha256 from 'crypto-js/sha256';
 import Cookies from 'js-cookie';
 import JwtDecode from 'jwt-decode';
+import SessionContext from '../Session/SessionContext';
 
 export default class Login extends Component{
+
+    static contextType = SessionContext;
 
     state = {
         username: '',
@@ -19,8 +22,12 @@ export default class Login extends Component{
         axios.post('http://localhost:8081/authhash', {message:sha256(`${username}:${password}`).toString()})
         .then( response => {
             const sessionInfo = JwtDecode(response.data);
+            this.context.state.authorization = response.data;
+            //console.log(this.context.state.authorization);
             //un numero entero significa un di­a
+            //this.context.tokenizer();
             Cookies.set('session', sessionInfo.session, {expires: 1});
+            Cookies.set('authorization', response.data);
             this.props.history.push('/dashboard');
         });
     }
